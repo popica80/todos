@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
     name: "ActiveTodos",
     props: {
@@ -23,9 +23,10 @@ export default {
     },
     data: () => ({}),
     computed: {
-        ...mapGetters("todos", ["activeTodos", "completedTodos"]),
         todos() {
-            return this.completed ? this.completedTodos : this.activeTodos;
+            return this.completed
+                ? this.$store.getters["todos/completedTodos"]
+                : this.$store.getters["todos/activeTodos"];
         }
     },
     methods: {
