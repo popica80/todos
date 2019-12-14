@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
         <div class="container">
             <router-link :to="{name: 'home'}" class="navbar-brand">Todos</router-link>
             <button
@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#"></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -39,7 +39,7 @@
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"
-                            >{{ current_user.user.name }}</a>
+                            >{{ current_user.name }}</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a @click.prevent="logout()" class="dropdown-item">log out</a>
                             </div>

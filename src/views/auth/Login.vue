@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">Log in to your account</div>
         <div class="card-body">
-            <form>
+            <form @submit.prevent="login()">
                 <div class="form-group">
                     <label for="form-login-email">your email</label>
                     <input v-model="form.email" type="email" class="form-control" />
@@ -18,10 +18,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
     computed: {
         ...mapState("auth", ["form"])
+    },
+    methods: {
+        ...mapActions("auth", ["login"])
     }
 };
 </script>

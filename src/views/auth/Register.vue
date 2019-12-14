@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">Register for an account</div>
         <div class="card-body">
-            <form>
+            <form @submit.prevent="register()">
                 <div class="form-group">
                     <label for="form-login-name">your name</label>
                     <input v-model="form.name" type="text" class="form-control" />
@@ -22,10 +22,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
     computed: {
         ...mapState("auth", ["form"])
+    },
+    methods: {
+        ...mapActions("auth", ["register"])
     }
 };
 </script>
