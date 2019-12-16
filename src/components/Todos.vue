@@ -3,19 +3,37 @@
         <div class="card-header">
             <slot></slot>
         </div>
-        <ul class="list-group">
-            <li v-for="todo in todos" :key="`todo-${todo.id}`" class="list-group-item">
-                {{todo.title}}
-                <input type="checkbox" v-model="todo.completed" />
-            </li>
-        </ul>
+        <div class="list-group list-group-flush">
+            <div v-for="todo in todos" :key="`todo-${todo.id}`" class="list-group-item">
+                <div class="d-flex align-items-center">
+                    <span class="flex-grow-1">{{todo.title}}</span>
+                    <div class="d-flex flex-column mr-3">
+                        <small>{{ todo.created_at }}</small>
+                        <small>{{ todo.category.name }}</small>
+                    </div>
+
+                    <img
+                        @click.prevent="deleteTodo(todo.id)"
+                        src="@/assets/icons/delete.svg"
+                        width="16px"
+                        class="mr-3"
+                    />
+                    <input
+                        type="checkbox"
+                        @
+                        v-model="todo.completed"
+                        @change="toggleCompleted(todo.id)"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 export default {
-    name: "ActiveTodos",
+    name: "Todos",
     props: {
         completed: {
             required: true
@@ -30,7 +48,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions("todos", ["fetchTodos"])
+        ...mapActions("todos", ["fetchTodos", "toggleCompleted", "deleteTodo"])
     },
     mounted() {
         this.fetchTodos({ completed: Number(this.completed) });

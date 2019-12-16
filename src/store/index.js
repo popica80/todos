@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from './auth';
-import todos from './todos';
+import auth from './modules/auth';
+import todos from './modules/todos';
 
 Vue.use(Vuex);
 

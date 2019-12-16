@@ -29,17 +29,18 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:3'
+            'title' => 'required|min:3',
+            'category' => 'required'
         ]);
 
         $todo = new Todo();
         $todo->title = $request->input('title');
         $todo->user_id = auth('api')->id();
-        $todo->category_id = 1;
+        $todo->category_id = $request->input('category');
         $todo->completed = 0;
         $todo->save();
 
-        return $todo;
+        return $todo->fresh();
     }
 
     /**
@@ -60,9 +61,15 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Todo $todo)
     {
-        //
+        if ($todo->user_id !== auth('api')->id()) {
+            return response()->json(['message' => 'Unauthorized action.'], 403);
+        }
+        $todo->completed = !$todo->completed;
+        $todo->save();
+
+        return $todo;
     }
 
     /**
@@ -71,8 +78,14 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        if ($todo->user_id !== auth('api')->id()) {
+            return response()->json(['message' => 'Unauthorized action.'], 403);
+        }
+        if (!$todo->delete()) {
+            return response()->json(['message' => 'could not delete', 422]);
+        }
+        return response()->json('', 204);
     }
 }

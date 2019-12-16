@@ -10,3 +10,5 @@ Route::apiResource('/todos', 'TodoController')->middleware('auth:api');
 
 Route::post('/auth/register', 'AuthController@register');
 Route::post('/auth/login', 'AuthController@login');
+
+Route::get('/categories', 'CategoryController@index');

@@ -36,8 +36,9 @@ class AuthController extends Controller
             return response()->json(Auth::user()->only('id', 'name', 'api_token'), 200);
         } else {
             return response()->json([
-                'message' => 'Incorrect or not existing email/password combination'
-            ]);
+                'message' => 'Incorrect or not existing email/password combination',
+                'errors' => ['login' => ['Incorrect or not existing email/password combination']]
+            ], 403);
         }
     }
 }

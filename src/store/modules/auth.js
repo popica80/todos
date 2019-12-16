@@ -27,10 +27,17 @@ export default {
       });
     },
     login({ commit, state }) {
-      axios.post('/auth/login', { ...state.form }).then(response => {
-        commit('SET_USER', response.data);
-        router.push({ name: 'home' });
-      });
+      axios
+        .post('/auth/login', { ...state.form })
+        .then(response => {
+          commit('SET_USER', response.data);
+          router.push({ name: 'home' });
+        })
+        .catch(errors => {
+          if (errors.response.status == 403) {
+            commit('SET_ERRORS', errors.response.data.errors);
+          }
+        });
     },
     logout({ commit }) {
       commit('SET_USER', null);
@@ -46,6 +53,7 @@ export default {
         localStorage.removeItem('user_token');
         state.user = null;
       }
-    }
+    },
+    SET_ERRORS(state, errors) {}
   }
 };
